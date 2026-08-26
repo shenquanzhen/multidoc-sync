@@ -15,11 +15,9 @@ jobs:
           - os: windows-latest
             artifact: MultiDocSync-Windows-x64.exe
             build: ./scripts/build_windows.ps1
-            shell: pwsh
           - os: macos-14
             artifact: MultiDocSync-macOS-arm64.zip
             build: bash scripts/build_macos.sh
-            shell: bash
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -31,8 +29,7 @@ jobs:
       - env:
           QT_QPA_PLATFORM: offscreen
         run: python -m unittest discover -s tests -v
-      - shell: ${{ matrix.shell }}
-        run: ${{ matrix.build }}
+      - run: ${{ matrix.build }}
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
