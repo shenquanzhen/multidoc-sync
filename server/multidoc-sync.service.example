@@ -1,0 +1,17 @@
+[Unit]
+Description=MultiDoc Sync anonymous telemetry API
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/multidoc-sync/server
+EnvironmentFile=/etc/multidoc-sync.env
+ExecStart=/opt/multidoc-sync/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:8792 app:app
+Restart=on-failure
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
